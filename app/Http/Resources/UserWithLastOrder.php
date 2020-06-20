@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Order as OrderResource;
 
-class UserWithApiToken extends JsonResource
+class UserWithLastOrder extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,7 +22,8 @@ class UserWithApiToken extends JsonResource
             'phone_number' => $this->phone_number,
             'email' => $this->email,
             'gender' => $this->when($this->gender, $this->gender),
-            'api_token' => $this->api_token,
+            'api_token' => $this->when($this->api_token, $this->api_token),
+            'last_order' => $this->when($this->order, new OrderResource($this->order)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

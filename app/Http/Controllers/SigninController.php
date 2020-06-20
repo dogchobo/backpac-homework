@@ -6,7 +6,7 @@ use App\Http\Requests\SigninRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use App\Http\Resources\UserWithApiToken as UserResource;
+use App\Http\Resources\User as UserResource;
 
 class SigninController extends Controller
 {
@@ -38,6 +38,6 @@ class SigninController extends Controller
             ], 401);
         }
 
-        return new UserResource($this->user->apiTokenRenewByEmail($request->email));
+        return new UserResource($this->user->renewApiTokenByEmail($request->email));
     }
 }

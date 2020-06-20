@@ -26,4 +26,16 @@ class Order extends Model
      * @var array
      */
     protected $casts = [];
+
+    /**
+     * 회원 고유번호 제약 조건
+     *
+     * @param $query
+     * @param $userId
+     * @return mixed
+     */
+    public function scopeUserId($query, $userId)
+    {
+        return $query->where('user_id', $userId);
+    }
 }

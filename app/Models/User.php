@@ -60,6 +60,18 @@ class User extends Authenticatable
     }
 
     /**
+     * 이름 제약 조건
+     *
+     * @param $query
+     * @param $name
+     * @return mixed
+     */
+    public function scopeName($query, $name)
+    {
+        return $query->where('name', $name);
+    }
+
+    /**
      * 이메일 제약 조건
      *
      * @param $query
@@ -77,7 +89,7 @@ class User extends Authenticatable
      * @param $email
      * @return mixed
      */
-    public function apiTokenRenewByEmail($email)
+    public function renewApiTokenByEmail($email)
     {
         $user = $this->email($email)->first();
 
@@ -86,6 +98,4 @@ class User extends Authenticatable
 
         return $user;
     }
-
-//    public function getWithLastOrder
 }

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/signup', 'SignupController');
 Route::post('/signin', 'SigninController');
 Route::middleware('auth:api')->delete('/signout', 'SignoutController');
-//Route::resource('users', 'UserController')->only([
-//    'index', 'show'
-//]);
+
+Route::get('/users', 'UserController@index');
+Route::get('/users/{id}', 'UserController@show');
+Route::get('/users/{id}/orders', 'UserController@indexOrder');
