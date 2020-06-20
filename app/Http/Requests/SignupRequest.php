@@ -28,7 +28,7 @@ class SignupRequest extends FormRequest
             'nickname' => 'required|regex:/^[a-z]+$/|max:30',
             'password' => 'required|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/|min:10',
             'phone_number' => 'required|regex:/^[.*\d]+$/|max:20',
-            'email' => 'required|email:rfc|max:100',
+            'email' => 'required|email:rfc|unique:App\Models\User|max:100',
             'gender' => 'in:M,F'
         ];
     }

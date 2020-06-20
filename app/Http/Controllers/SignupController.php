@@ -23,19 +23,13 @@ class SignupController extends Controller
     }
 
     /**
+     * Signup 기본 메소드
+     *
      * @param SignupRequest $request
      * @return UserResource
      */
     public function __invoke(SignupRequest $request)
     {
-        $this->user->name = $request->name;
-        $this->user->nickname = $request->nickname;
-        $this->user->password = bcrypt($request->password);
-        $this->user->phone_number = $request->phone_number;
-        $this->user->email = $request->email;
-        $this->user->gender = $request->gender;
-        $this->user->save();
-
-        return new UserResource($this->user);
+        return new UserResource($this->user->create($request->validated()));
     }
 }
