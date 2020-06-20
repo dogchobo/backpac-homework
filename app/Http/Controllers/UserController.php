@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserIndexRequest;
-use App\Models\Order;
 use App\Models\User;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserWithLastOrder as UserWithLastOrderResource;
 use App\Http\Resources\Order as OrderResource;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
@@ -15,20 +15,14 @@ class UserController extends Controller
      * @var User
      */
     private $user;
-    /**
-     * @var Order
-     */
-    private $order;
 
     /**
      * UserController constructor.
      * @param User $user
-     * @param Order $order
      */
-    public function __construct(User $user, Order $order)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->order = $order;
     }
 
     /**
@@ -63,6 +57,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if (!$this->user->find($id)) {
+            throw new NotFoundHttpException('Not Found');
+        }
+
         return new UserResource($this->user->find($id));
     }
 
@@ -74,9 +72,10 @@ class UserController extends Controller
      */
     public function indexOrder($id)
     {
-        return OrderResource::collection($this->order
-            ->userId($id)
-            ->get()
-        );
+        if (!$this->user->find($id)) {
+            throw new NotFoundHttpException('Not Found');
+        }
+
+        return OrderResource::collection($this->user->find($id)->orders);
     }
 }
